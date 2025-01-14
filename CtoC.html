@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #000000;
+            color: #006400;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        label, input, button {
+            font-size: 1.5em;
+            margin: 10px;
+            color: #006400;
+        }
+        input[type="number"] {
+            width: 300px;
+            padding: 10px;
+            background-color: #333;
+            color: #006400;
+            border: 1px solid #006400;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #006400;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004d00;
+        }
+        p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00cc00;
+        }
+    </style>
+    <script>
+        function calculate() {
+            const value = parseFloat(document.getElementById('value').value);
+            const type = document.querySelector('input[name="type"]:checked').value;
+            const calculation = document.querySelector('input[name="calculation"]:checked').value;
+            const result = document.getElementById('result');
+            
+            if (isNaN(value) || value <= 0) {
+                result.textContent = 'Please enter a valid positive number.';
+                return;
+            }
+            
+            const radius = type === 'diameter' ? value / 2 : value;
+            let output = '';
+            
+            if (calculation === 'circumference') {
+                const circumference = 2 * Math.PI * radius;
+                output = `The circumference is: ${circumference.toFixed(2)} cm`;
+            } else if (calculation === 'area') {
+                const area = Math.PI * Math.pow(radius, 2);
+                output = `The area is: ${area.toFixed(2)} cm²`;
+            }
+            
+            result.textContent = output;
+        }
+    </script>
+</head>
+<body>
+    <h1>Circle Calculator</h1>
+    <label for="value">Enter the value (in cm):</label>
+    <input type="number" id="value" placeholder="Enter value in cm">
+    <br>
+    <input type="radio" id="radius" name="type" value="radius" checked>
+    <label for="radius">Radius</label>
+    <input type="radio" id="diameter" name="type" value="diameter">
+    <label for="diameter">Diameter</label>
+    <br>
+    <input type="radio" id="circumference" name="calculation" value="circumference" checked>
+    <label for="circumference">Circumference</label>
+    <input type="radio" id="area" name="calculation" value="area">
+    <label for="area">Area</label>
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <p id="result"></p>
+</body>
+</html>
